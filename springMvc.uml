@@ -1,0 +1,42 @@
+@startuml
+
+note "参考链接:http://fangjian0423.github.io/2017/07/28/springmvc-process-write-by-processon/" as n1
+
+[DispatcherServlet] as dis
+actor man
+
+package "HandlerMapping"{
+() "HandlerMapping" as hmap
+[RequestMappingHandlerMapping] as rmhm
+[HandlerMethod] as hmd
+rmhm .u.|>hmap
+rmhm-d->hmd
+}
+
+package "HandlerAdapter"{
+() "HandlerAdapter" as hand
+[RequestMappingHandlerAdapter] as rmha
+() "HandlerMethodArgumentResolver" as hmar
+() "HandlerMethodReturnValueHandler" as hmrvh
+[RequestParamMethodArgumentResolver] as rpmar
+[RequestResponseBodyMethodProcessor] as rrbmp
+[ModelAndViewMethodReturnValueHandler] as mavmrvh
+rmha .u.|>hand
+rmha -d->hmar
+rmha -d->hmrvh
+rpmar .u.|> hmar
+rrbmp .u.|> hmar
+rrbmp .u.|> hmrvh
+mavmrvh .u.|> hmrvh
+}
+
+man-r->dis:请求
+dis-d->[ViewResolver]
+[ViewResolver]-d->[View]
+[View]-l->man
+
+dis-u->HandlerMapping:遍历HandlerMapping集合
+HandlerMapping-d->dis:找到对应的HandlerMapping\n并得到HandlerExecutionChain.\nHandlerExecutionChain内部包括了拦截器
+dis-d->HandlerAdapter
+HandlerAdapter-u->dis
+@enduml
