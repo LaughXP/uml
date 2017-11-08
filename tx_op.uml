@@ -1,0 +1,18 @@
+@startuml
+start
+:Spring初始化Bean完成;
+:遍历所有的BeanPostProcessor;
+:执行InfrastructureAdvisorAutoProxyCreator的
+postProcessAfterInitialization()方法;
+:查询所有实现了Advisor的切面;
+:查找与当前Bean匹配的切面;
+note right
+从Advisor中获得PointCut
+去执行PointCut的matches方法
+matches方法又调用AnnotationTransactionAttributeSource#getTransactionAttribute()
+去匹配@Transactional注解，并保存注解的内容
+end note
+:创建代理类;
+:加入容器;
+end
+@enduml

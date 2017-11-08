@@ -1,0 +1,41 @@
+@startuml
+
+[AOP]-->[Spring]
+[AOP]-->[AspectJ]
+[Spring]-->[Spring AOP]
+[Spring]-->[Spring IoC]
+[Spring AOP]-->[切面描述语言]
+[AspectJ]-d->[AspectJ切点表达式]
+[AspectJ切点表达式]-->[切面描述语言]
+[切面描述语言]-->[Spring整合]
+[Spring IoC]-->[Spring整合]
+[Spring整合]-->[JDK:基于接口]
+[Spring整合]-->[Spring LTW:类加载时织入]
+[Spring整合]-->[CGLIB:基于继承]
+[AspectJ]-->[AspectJ LTW:类加载时织入]
+[Spring LTW:类加载时织入]-->[静态植入]
+[AspectJ LTW:类加载时织入]-->[静态植入]
+[JDK:基于接口]-->[动态代理]
+[CGLIB:基于继承]-->[动态代理]
+
+note left of AOP
+面向切面编程
+剥离公共的横向业务逻辑进行统一处理
+是一种编程思想
+end note
+
+note right of Spring
+提供IoC容器用于整合AOP
+可以无缝的将Spring AOP、IoC、AspectJ整合一起
+end note
+
+note right of AspectJ
+扩展Java语言，定义AOP语法
+可在编译器进行代码织入
+end note
+
+note right of Spring整合
+Spring在初始化Bean时找到与之对应的切面
+进行增强(生成代理类)
+end note
+@enduml
