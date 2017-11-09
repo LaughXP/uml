@@ -3,36 +3,36 @@ start
 :启动容器;
 :Spring解析XML;
 :找到与tx对应的TxNamespaceHandler;
-:注册与annotation-driven对应spring-tx包下面的AnnotationDrivenBeanDefinitionParser;
+:注册与annotation-driven对应spring-tx
+包下面的AnnotationDrivenBeanDefinitionParser;
 :解析标签;
 :匹配标签并执行AnnotationDrivenBeanDefinitionParser#parse();
 :注册InfrastructureAdvisorAutoProxyCreator;
 note right
 该类实现自接口BeanPostProcessor
-在Bean初始化完成之后会执行postProcessAfterInitialization()方法生成代理类
+在Bean初始化完成之后会执行
+postProcessAfterInitialization()方法生成代理类
 end note
-:创建AnnotationTransactionAttributeSource的BeanDefinition;
+:创建AnnotationTransactionAttributeSource
+的BeanDefinition;
 note right
 用于解析Bean里@Transactional注解
 end note
-:创建TransactionInterceptor的BeanDefinition;
+:创建TransactionInterceptor
+的BeanDefinition;
 note right
 创建增强
 end note
-:创建BeanFactoryTransactionAttributeSourceAdvisor的BeanDefinition;
+:创建BeanFactoryTransactionAttributeSourceAdvisor
+的BeanDefinition;
 note right
 创建切面
-内部包含TransactionAttributeSourcePointcut(切点)的全局变量
+内部包含TransactionAttributeSourcePointcut(切点)
+的全局变量(匿名类实例)
 切点内部又保存了TransactionAttributeSource(连接点)的引用
-private final TransactionAttributeSourcePointcut pointcut = new TransactionAttributeSourcePointcut() {
-  @Override
-  protected TransactionAttributeSource getTransactionAttributeSource() {
-    return transactionAttributeSource;
-  }
-};
 当Spring为Bean实施增强的时候,会根据Advisor获得PointCut
-再由PointCut中的TransactionAttributeSource去解析@Transactional注解
-最后再生成代理类
+再由PointCut中的TransactionAttributeSource
+去解析@Transactional注解最后再生成代理类
 end note
 :将连接点解析器和增强保存进切面中;
 end
