@@ -1,0 +1,17 @@
+@startuml
+[单推业务]-->[xpush-single]
+[批量推送业务]-->[xpush-backer]
+[xpush-backer]-->[xpush-agent]
+[xpush-agent]-->[mq]
+[mq]-->[xpush-list]
+[mq]->[xpush-all]
+
+[xpush-single]-->[xpush-sdk]
+[xpush-list]-->[xpush-sdk]
+[xpush-all]-->[xpush-sdk]
+[xpush-sdk]-->[apns]
+[xpush-sdk]-->[个推]
+[xpush-sdk]-->[华为推送]
+[xpush-sdk]-->[米推]
+[xpush-sdk]-->[...]
+@enduml
