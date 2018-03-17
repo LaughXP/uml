@@ -1,0 +1,41 @@
+@startuml
+
+package "计费主流程"{
+[预估] as estimate
+[创建账单\n(计价规则快照)] as create
+[账单开始计费] as start
+[中间费用] as middle
+[结束计费] as end
+[结算费用] as checkOut
+
+[预估]-r->[叫单]
+[叫单]-r->[订单开始计费]
+[订单开始计费]-r->[行程中]
+[行程中]-r->[订单结束计费]
+[订单结束计费]-r->[订单结算]
+[预估]-d-estimate
+[叫单]-d-create
+[订单开始计费]-d-start
+[行程中]-d-middle
+[订单结束计费]-d-end
+[订单结算]-d-checkOut
+
+create-d-初始化状态
+start-d-开始状态
+middle-d-开始状态
+end-d-结束状态
+checkOut-d-结算状态
+}
+
+package "改价" {
+[订单改价]-d-[账单改价]
+}
+
+package "计费规则修改" {
+[添加计费规则]
+[更新计费规则]
+[添加计费单元]
+[更新计费单元]
+}
+
+@enduml

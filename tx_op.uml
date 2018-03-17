@@ -15,8 +15,9 @@ AnnotationTransactionAttributeSource#getTransactionAttribute()
 end note
 :创建代理类;
 note right
-使用Advisor中的TransactionInterceptor
-在对应的切点实施增强
+使用JdkDynamicAopProxy(该类实现了InvocationHandler接口)类的getProxy方法生成代理类。
+该方法调用了jdk的动态代理api: Proxy.newProxyInstance(classLoader, proxiedInterfaces, this)
+参数this就是JdkDynamicAopProxy类本身，该类将匹配的切面(包含TransactionInterceptor)保存在了自身的属性advised中
 end note
 :加入容器;
 end
